@@ -1,24 +1,22 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from .models import Film
-from .serializers import FilmSerializer
 
-# Create your views here.
+from rest_framework import generics
+from .models import Film, Serie
+from .serializers import FilmSerializer, SerieSerializer
 
-class FilmsListCreate(APIView):
+class SerieListCreate(generics.ListCreateAPIView):
+    queryset = Serie.objects.all()
+    serializer_class = SerieSerializer
 
-    def get(self, request):
-        films = Film.objects.all()
-        serializer = FilmSerializer(films, many=True)
+class SeriesRetriveUpadeteDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Serie.objects.all()
+    serializer_class = SerieSerializer
 
-        return Response(serializer.data)
-    
-    def post(self, request):
-        serializer = FilmSerializer(data= request.data)
+class FilmsListCreate(generics.ListCreateAPIView):
+    queryset = Film.objects.all()
+    serializer_class = FilmSerializer
 
-        #comprobamos que la request sea valida
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status= status.HTTP_201_CREATED)
+class FilmsRetriveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Film.objects.all()
+    serializer_class = FilmSerializer
+
     
