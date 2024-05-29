@@ -1,6 +1,6 @@
 import requests
 
-url = 'http://127.0.0.1:8000/api/films/'
+url = 'http://127.0.0.1:8000/api/catalog/'
 
 # response_post = requests.post( url, data = {
 #     "name": "Mia Goth",
@@ -17,4 +17,4 @@ url = 'http://127.0.0.1:8000/api/films/'
 response = requests.get(url)
 
 
-print(response.json())
+print(response)
