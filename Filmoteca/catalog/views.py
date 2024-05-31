@@ -1,9 +1,18 @@
-
 from rest_framework import generics, filters
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Film, Serie
 from .serializers import FilmSerializer, SerieSerializer
+
+# ----- Creamos modelos base genéricos para poder reutilizarlos en los diferentes modelos y asi aplicamos DRY----
+
+class BaseSearchView(generics.ListAPIView):
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title']
+
+class BaseOrderView(generics.ListAPIView):
+    filter_backends = [filters.OrderingFilter]
+    order_fields = ['title', 'release_date']
 
 # ---- VISTAS DEL MODELO SERIES ----
 class SerieListCreate(generics.ListCreateAPIView):
@@ -14,11 +23,13 @@ class SeriesRetriveUpadeteDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Serie.objects.all()
     serializer_class = SerieSerializer
 
-class SeriesSearch(generics.ListAPIView):
+class SeriesSearch(BaseSearchView):
     queryset = Serie.objects.all()
     serializer_class = SerieSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['title']
+
+class SerieListOrder(BaseOrderView):
+    queryset = Serie.objects.all()
+    serializer_class = SerieSerializer
 
 # ---- VISTAS DEL MODELO FILMS ----
 
@@ -30,11 +41,14 @@ class FilmsRetriveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Film.objects.all()
     serializer_class = FilmSerializer
 
-class FilmSearch(generics.ListAPIView):
+class FilmSearch(BaseSearchView):
     queryset = Film.objects.all()
     serializer_class = FilmSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['title']
+
+
+class FilmListOrder(BaseOrderView):
+    queryset = Film.objects.all()
+    serializer_class = FilmSerializer
 
 # ---- VISTAS APIVIEW  QUE ENLAZA LOS MODELOS----
 
