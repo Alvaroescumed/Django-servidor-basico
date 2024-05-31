@@ -61,6 +61,7 @@ class CatalogList(APIView):
         film_serializer = FilmSerializer(films, many=True)
         serie_serializer = SerieSerializer(series, many=True)
 
+        #juntamos los datos de los modelos
         catalog_data = {
             'films': film_serializer.data,
             'series': serie_serializer.data
@@ -76,6 +77,7 @@ class CatalogSerchByGenre(APIView):
 
         genre = request.query_params.get('genre', None)
 
+        #comprobamos que el parametro de busqueda no sea nulo
         if genre is None:
             return Response({"error" : "Genre parameter is required"})
         

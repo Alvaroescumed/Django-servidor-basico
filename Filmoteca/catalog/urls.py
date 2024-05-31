@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import SerieListCreate, SeriesRetriveUpadeteDestroy, FilmsListCreate, FilmsRetriveUpdateDestroy, CatalogList, CatalogSerchByGenre, SeriesSearch, FilmSearch, SerieListOrder, FilmListOrder
 
+#creamos las urls para cada view
 urlpatterns = [
     path('series/', SerieListCreate.as_view(), name='serie_list_create'),
     path('series/<int:pk>', SeriesRetriveUpadeteDestroy.as_view(), name='serie_retrive_update_destroy'),

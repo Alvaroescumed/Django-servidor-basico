@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import Film, Serie
 
+#creamos los serializers para cada modelo
+
 class SerieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Serie
